@@ -1,3 +1,2 @@
-name,email,phone_number,schedule_date,schedule_time,response_status,reschedule_date,reschedule_time
-Damodar Bhawsar,damodar.7974@gmal.com,+917974227456,2025-07-20,11:00 AM,Pending,,
-Rishikesh Bhawsar,51110104178@piemr.edu.in,+917974227456,2025-07-21,02:00 PM,Pending,,
+Candidate_Name,Phone_Number,Date,Time,Status,Email
+Damodar,+917974227456,2025-07-20,12:00 PM,Pending,damodar.7974@gmal.com
