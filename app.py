@@ -1,21 +1,26 @@
-# app.py
 from flask import Flask, request, jsonify
 from call_handler import start_calls_from_csv
 from response_handler import handle_response
 
 app = Flask(__name__)
 
-@app.route('/start-calls', methods=['GET'])
+@app.route("/")
+def index():
+    return "✅ Interview Agent Running"
+
+@app.route("/start-calls")
 def start_calls():
     start_calls_from_csv()
-    return jsonify({"message": "✅ Calls initiated"})
+    return "✅ Calls started"
 
-@app.route('/log-response', methods=['POST'])
+@app.route("/log-response", methods=["POST"])
 def log_response():
     return handle_response(request.json)
+
+# ✅ This is the key fix
 @app.route("/tools", methods=["GET"])
 def list_tools():
-    return {
+    return jsonify({
         "tools": [
             {
                 "name": "log_response",
@@ -29,7 +34,4 @@ def list_tools():
                 }
             }
         ]
-    }
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+    })
