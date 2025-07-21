@@ -2,7 +2,7 @@ import requests
 
 def call_candidate(name, number, date, time):
     agent_id = "agent_01k0dz6eqjf5xbnt9p5aztm02x"
-    url = f"https://api.elevenlabs.io/v1/agents/{agent_id}/call"
+    url = f"https://api.elevenlabs.io/v1/agents/{agent_id}/calls"  # ✅ FIXED
 
     payload = {
         "phone_number": number,
@@ -20,4 +20,4 @@ def call_candidate(name, number, date, time):
 
     r = requests.post(url, json=payload, headers=headers)
     print("✅ Call sent to:", name, number)
-    print("Response:", r.text)
+    print("Response:", r.status_code, r.text)
