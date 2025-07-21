@@ -1,8 +1,17 @@
+# call_handler.py
 import csv
 import requests
+import os # Import the os module
 
 def call_candidate(name, number, date, time):
-    agent_id = "agent_01k0dz6eqjf5xbnt9p5aztm02x"
+    # Get Agent ID and API Key from environment variables
+    agent_id = os.environ.get("agent_01k0dz6eqjf5xbnt9p5aztm02x")
+    api_key = os.environ.get("sk_731ae5efda6af78f64cd48354d3e4d95de9824f23c723f45")
+
+    if not agent_id or not api_key:
+        print("Error: ELEVENLABS_AGENT_ID and ELEVENLABS_API_KEY must be set as environment variables.")
+        return
+
     url = f"https://api.elevenlabs.io/v1/agents/{agent_id}/calls"
 
     payload = {
@@ -15,7 +24,7 @@ def call_candidate(name, number, date, time):
     }
 
     headers = {
-        "xi-api-key": "sk_f7db91804aafc36f5e4c5498c82eadf8d35724fc394bf510",
+        "xi-api-key": api_key,
         "Content-Type": "application/json"
     }
 
@@ -23,14 +32,4 @@ def call_candidate(name, number, date, time):
     print("✅ Call sent to:", name, number)
     print("Response:", r.status_code, r.text)
 
-def start_calls_from_csv():
-    with open("candidates.csv") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if row['Status'] == 'Pending':
-                call_candidate(
-                    row['Candidate_Name'],
-                    row['Phone_Number'],
-                    row['Date'],
-                    row['Time']
-                )
+# ... (rest of the file remains the same)
