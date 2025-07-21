@@ -1,15 +1,13 @@
-# call_handler.py
 import csv
 import requests
 import os
 
 def call_candidate(name, number, date, time):
-    # Get Agent ID and API Key from environment variables
     agent_id = os.environ.get("ELEVENLABS_AGENT_ID")
     api_key = os.environ.get("ELEVENLABS_API_KEY")
 
     if not agent_id or not api_key:
-        print("Error: ELEVENLABS_AGENT_ID and ELEVENLABS_API_KEY must be set as environment variables.")
+        print("❌ ELEVENLABS_AGENT_ID or ELEVENLABS_API_KEY is missing in environment variables.")
         return
 
     url = f"https://api.elevenlabs.io/v1/agents/{agent_id}/calls"
@@ -36,7 +34,7 @@ def start_calls_from_csv():
     with open("candidates.csv") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            if row['Status'] == 'Pending':
+            if row['Status'].lower() == 'pending':
                 call_candidate(
                     row['Candidate_Name'],
                     row['Phone_Number'],
