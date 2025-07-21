@@ -13,6 +13,23 @@ def start_calls():
 @app.route('/log-response', methods=['POST'])
 def log_response():
     return handle_response(request.json)
+@app.route("/tools", methods=["GET"])
+def list_tools():
+    return {
+        "tools": [
+            {
+                "name": "log_response",
+                "description": "Log candidate's interview response",
+                "type": "action",
+                "parameters": {
+                    "Candidate_Name": "string",
+                    "Status": "string",
+                    "New_Date": "string",
+                    "New_Time": "string"
+                }
+            }
+        ]
+    }
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
