@@ -1,22 +1,31 @@
-from flask import Flask, request, jsonify
-from call_handler import call_candidate
+from flask import Flask, request
+from call_handler import start_calls_from_csv
 from response_handler import handle_response
+from call_handler import call_candidate
 
 app = Flask(__name__)
 
 @app.route('/start-calls')
 def start_calls():
-    import csv
-    with open("candidates.csv") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if row['Status'] == 'Pending':
-                call_candidate(row['Candidate_Name'], row['Phone_Number'], row['Date'], row['Time'])
-    return "✅ Calls triggered"
+    start_calls_from_csv()
+    return '✅ All calls triggered'
 
 @app.route('/log-response', methods=['POST'])
 def log_response():
     return handle_response(request.json)
 
+# ✅ NEW: Accept direct /calls POST requests from ElevenLabs or Postman
+@app.route('/calls', methods=['POST'])
+def direct_call():
+    data = request.get_json()
+    name = data["dynamic_variables"].get("Candidate_Name", "Candidate")
+    number = data["phone_number"]
+    date = data["dynamic_variables"].get("Date", "")
+    time = data["dynamic_variables"].get("Time", "")
+
+    call_candidate(name, number, date, time)
+
+    return {"message": "📞 Call triggered via /calls"}
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=10000)
