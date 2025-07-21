@@ -1,10 +1,10 @@
 import csv
 
 def handle_response(data):
-    name = data.get("Candidate_Name") or data.get("candidate_name") or "Unknown"
-    status = data.get("Status") or data.get("status") or "Unknown"
-    new_date = data.get("New_Date") or data.get("new_date")
-    new_time = data.get("New_Time") or data.get("new_time")
+    name = data["Candidate_Name"]
+    status = data["Status"]
+    new_date = data.get("New_Date")
+    new_time = data.get("New_Time")
 
     updated_rows = []
     with open("candidates.csv") as f:
@@ -12,7 +12,7 @@ def handle_response(data):
         for row in reader:
             if row["Candidate_Name"] == name:
                 row["Status"] = status
-                if status.lower() == "reschedule" and new_date and new_time:
+                if status == "Reschedule":
                     row["Date"] = new_date
                     row["Time"] = new_time
             updated_rows.append(row)
