@@ -2,7 +2,7 @@ import requests
 
 def call_candidate(name, number, date, time):
     agent_id = "agent_01k0dz6eqjf5xbnt9p5aztm02x"
-    url = f"https://api.elevenlabs.io/v1/agents/{agent_id}/calls"  # ✅ FIXED
+    url = f"https://api.elevenlabs.io/v1/agents/{agent_id}/calls"  # ✅ FIXED endpoint
 
     payload = {
         "phone_number": number,
@@ -14,7 +14,7 @@ def call_candidate(name, number, date, time):
     }
 
     headers = {
-        "xi-api-key": "sk_21ac555177b458ab8bcb7c3409c0d85663bcc3afa860e8c0",
+        "xi-api-key": "sk_f7db91804aafc36f5e4c5498c82eadf8d35724fc394bf510",  # ✅ Your key
         "Content-Type": "application/json"
     }
 
